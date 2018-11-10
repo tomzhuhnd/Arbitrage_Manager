@@ -1,0 +1,20 @@
+# ================================================== TO DO's ================================================== # 
+
+
+# GUI - Front End
+[ ] - Develop the algorithmn to handle updating the WindowPricingView
+[ ] - There is a chance that the GUI will hang up the entire python program. Research alternative methods by not using mainloop function in tkinter
+[ ] - Create an actual timer structure in the main loop
+
+# Connectivity- QCX
+[x] - Develop the Thread
+[x] - Create the REST functions to request data
+    Add failover handlers:
+[ ] - General exception handler
+[ ] - Error handler - for when too many requests are being made
+
+# Connectivity - BFX
+[ ] - Fix formatting issues with the Thread
+
+# Program Manager
+[ ] - Add a smarter program stop function so that it continuously loops, and then force closes the threads if they hang

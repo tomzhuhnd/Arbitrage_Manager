@@ -12,10 +12,12 @@ class bfx_webservice(Thread):
 
     def __init__(self, parent):
 
-        self.name = 'bfx'
-        self.type = 'webservice'
+        # Class name
+        self._name = 'QCX'
+        self._type = 'Connectivity'
+        self._iden = self._name + self._type
 
-        print('Thread: {:<10} - '.format(self.name) + 'Initializing ... ', end='')
+        print('Thread: {} - '.format(self._iden) + 'Initializing ... ', end='')
 
         # Class variables
         self.parent = parent
@@ -29,7 +31,7 @@ class bfx_webservice(Thread):
 
     def run(self):
 
-        print('Thread: {:<10} - '.format(self.name) + 'Started.')
+        print('Thread: {} - '.format(self.name) + 'Started.')
 
         # Main loop
         while not self._stopped.is_set():
@@ -56,7 +58,7 @@ class bfx_webservice(Thread):
             return orderbook, target_pair
 
         except Exception as e:
-            print('Thread: {:<10} - '.format(self.name) + ' Exception on trading orderbook request: ' + str(e))
+            print('Thread: {} - '.format(self.name) + ' Exception on trading orderbook request: ' + str(e))
 
 
     def standardize_orderbook(self, orderbook):
@@ -76,5 +78,5 @@ class bfx_webservice(Thread):
 
     def stop(self):
 
-        print('Thread: {:<10} - '.format(self.name) + 'Shutting down.')
+        print('Thread: {} - '.format(self.name) + 'Shutting down.')
         self._stopped.set()
