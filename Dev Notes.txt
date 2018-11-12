@@ -3,7 +3,6 @@
 
 # GUI - Front End
 [ ] - Develop the algorithmn to handle updating the WindowPricingView
-[ ] - There is a chance that the GUI will hang up the entire python program. Research alternative methods by not using mainloop function in tkinter
 [ ] - Create an actual timer structure in the main loop
 
 # Connectivity- QCX
@@ -18,3 +17,4 @@
 
 # Program Manager
 [ ] - Add a smarter program stop function so that it continuously loops, and then force closes the threads if they hang
+[ ] - We should have a global event that allows all of the threads to get into the main loop, so that a main thread doesn't automatically start executing functions before a dependency in another thread is fully initialized

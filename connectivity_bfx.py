@@ -13,9 +13,9 @@ class bfx_webservice(Thread):
     def __init__(self, parent):
 
         # Class name
-        self._name = 'QCX'
+        self._label = 'QCX'
         self._type = 'Connectivity'
-        self._iden = self._name + self._type
+        self._iden = self._label + self._type
 
         print('Thread: {} - '.format(self._iden) + 'Initializing ... ', end='')
 

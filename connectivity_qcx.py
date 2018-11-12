@@ -11,12 +11,14 @@ from threading import Thread, Event
 
 class ConnectivityQCX(Thread):
 
-    def __init__(self):
+    # ============================ Core Functions ============================ #
+
+    def __init__(self, data_queue):
 
         # Class name
-        self._name = 'QCX'
+        self._label = 'QCX'
         self._type = 'Connectivity'
-        self._iden = '[' + self._type + ': ' + self._name + ']'
+        self._iden = '[' + self._type + ': ' + self._label + ']'
 
         print('Thread: {:<25} - '.format(self._iden) + 'Initializing ... ', end='')
 
@@ -32,6 +34,9 @@ class ConnectivityQCX(Thread):
         # Class event flags
         self._stopped = Event()
 
+        # Data grid variables
+        self.data_queue = data_queue
+
         # Initialization done, create thread instance
         super(ConnectivityQCX, self).__init__()
         print('Done.')
@@ -39,6 +44,10 @@ class ConnectivityQCX(Thread):
     def run(self):
 
         print('Thread: {:<25} - '.format(self._iden) + 'Started.')
+
+        # Initialize in data manager
+        self.init_to_data_manager()
+        time.sleep(0.5)
 
         # Main loop
         while not self._stopped.is_set():
@@ -58,9 +67,13 @@ class ConnectivityQCX(Thread):
 
     def stop_thread(self):
         # Set stop event
-        print('Thread: {:<25} - '.format(self._iden) + 'Stopping thread')
+        print('Thread: {:<25} - '.format(self._iden) + 'Stopping thread.')
         self._stopped.set()
-        self.join()
+
+    def init_to_data_manager(self):
+
+        # Add all the pairs to order book data grid
+        self.data_queue.put(('order book', 'add exchange', (self._label, self.pair_list)))
 
     # ============================== Functions ============================== #
     def load_all_books(self):
@@ -70,7 +83,7 @@ class ConnectivityQCX(Thread):
             status, pair, payload = request_order_book(trade_pair[0], trade_pair[1])
             if status:
                 # TODO: Load order book details into data grid
-                print(str(payload)[0:80])
+                self.update_data_grid_order_book(pair, payload)
             else:
                 if payload[0] == 'rejection':               # QCX rejected our request
                     print('Thread: {:<25} - '.format(self._iden) +
@@ -86,6 +99,11 @@ class ConnectivityQCX(Thread):
                           'Exception raised! Exception: ' + str(payload[1]))
                     # TODO: This should trigger a thread restart
                     return
+
+    def update_data_grid_order_book(self, pair, order_book):
+
+        # Send update command to data manager
+        self.data_queue.put(('order book', 'update', (self._label, pair, order_book)))
 
     # ======================================================================= #
 

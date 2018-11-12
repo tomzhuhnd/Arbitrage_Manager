@@ -18,9 +18,9 @@ class FrontEndManager(Thread):
     def __init__(self, command_queue):
 
         # Class name
-        self._name = 'gui'
+        self._label = 'GUI'
         self._type = 'Manager'
-        self._iden = '[' + self._type + ': ' + self._name + ']'
+        self._iden = '[' + self._type + ': ' + self._label + ']'
 
         print('Thread: {:<25} - '.format(self._iden) + 'Initializing ... ', end='')
 
@@ -83,7 +83,7 @@ class WindowControl:
     def __init__(self, gui_root, command_handlers):
 
         # Class internal variables
-        self._name = 'Control Window'
+        self._label = 'Control Window'
         self._type = 'Front End'
 
         # Tkinter GUI Master root variables
@@ -118,7 +118,7 @@ class WindowPricingView:
     def __init__(self, gui_root):
 
         # Class internal variables
-        self._name = 'Pricing Window'
+        self._label = 'Pricing View'
         self._type = 'Front End'
 
         # Tkinter GUI Master root variables
