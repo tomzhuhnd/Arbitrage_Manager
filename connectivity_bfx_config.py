@@ -1,10 +1,6 @@
 bfx_url = 'https://api.bitfinex.com/v2/'
 
-fiat_pairs = [
-    ['BTC', 'USD'], ['BCH', 'USD'], ['ETH', 'USD'], ['LTC', 'USD'], ['BTG', 'USD']
+trading_pairs = [
+    ('BTC', 'USD'), ('ETH', 'USD'), ('LTC', 'USD'), ('BCH', 'USD'), ('BTG', 'USD'),
+                    ('ETH', 'BTC'), ('LTC', 'BTC'), ('BCH', 'BTC'), ('BTG', 'BTC')
 ]
-
-coin_pairs = [
-    ['BCH', 'BTC'], ['ETH', 'BTC'], ['LTC', 'BTC'], ['BTG', 'BTC']
-]
-

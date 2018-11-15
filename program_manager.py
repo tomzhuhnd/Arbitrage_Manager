@@ -9,6 +9,7 @@ from threading       import Thread, Event
 import data_manager
 import front_end_manager
 import connectivity_qcx
+import connectivity_bfx
 
 class ProgramManager(Thread):
 
@@ -25,6 +26,7 @@ class ProgramManager(Thread):
         self._thread_data_manager = None
         self._thread_front_end = None
         self._thread_connectivity_qcx = None
+        self._thread_connectivity_bfx = None
         self._thread_dict = {}
 
         # Class timers
@@ -75,6 +77,11 @@ class ProgramManager(Thread):
         self._thread_connectivity_qcx.start()
         self._thread_dict[3] = self._thread_connectivity_qcx
 
+        # BFX
+        self._thread_connectivity_bfx = connectivity_bfx.ConnectivityBFX(self.data_queue)
+        self._thread_connectivity_bfx.start()
+        self._thread_dict[4] = self._thread_connectivity_bfx
+
         print('Thread: {:<25} - '.format(self._iden) + 'Child Thread Initialization complete!')
 
         #  ------------------------------- MAIN LOOP ------------------------------- #
@@ -95,9 +102,6 @@ class ProgramManager(Thread):
                     self.__idle_state = True
                 else:
                     self.__idle_count += 1
-
-
-
         #  ------------------------------------------------------------------------- #
 
         # Stop main has been triggered. Shut down all child threads.

@@ -2,6 +2,7 @@
 import time
 import json, requests
 import timing_handler
+
 # Import config
 import connectivity_qcx_config as config
 
@@ -80,7 +81,7 @@ class ConnectivityQCX(Thread):
 
         for trade_pair in self.pair_list:
             # Request the order book details
-            status, pair, payload = request_order_book(trade_pair[0], trade_pair[1])
+            status, pair, payload = request_trading_order_book(trade_pair[0], trade_pair[1])
             if status:
                 # TODO: Load order book details into data grid
                 self.update_data_grid_order_book(pair, payload)
@@ -110,7 +111,7 @@ class ConnectivityQCX(Thread):
 
 # ==================================== REST functions ==================================== #
 
-def request_order_book(to_currency, from_currency):
+def request_trading_order_book(to_currency, from_currency):
 
     request_url = config.qcx_api_url + 'order_book'
 

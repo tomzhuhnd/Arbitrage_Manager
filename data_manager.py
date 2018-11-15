@@ -41,6 +41,10 @@ class DataManager(Thread):
             }
         }
 
+        # Temporary
+        self.counter = 0
+        self.counter_bool = True
+
         # Initialization done, create thread instance
         super(DataManager, self).__init__()
         print('Done')
@@ -51,6 +55,13 @@ class DataManager(Thread):
 
         #  ------------------------------- MAIN LOOP ------------------------------- #
         while not self._stopped.is_set():
+
+            # if self.counter == 200 and self.counter_bool:
+            #     self.counter_bool = False
+            #     for exchange in self.__data_grid_order_books:
+            #         print(exchange)
+            #         for orderbook in self.__data_grid_order_books[exchange]:
+            #             print('\t' + str(orderbook) + ": " + str(self.__data_grid_order_books[exchange][orderbook])[0:80])
 
             if not self.data_queue.empty():
 
@@ -65,6 +76,7 @@ class DataManager(Thread):
 
             elif self.__idle_state:
                 time.sleep(self.__sleep)
+                self.counter += 1           # Temporary
             else:
                 if self.__idle_count == self.__idle_limit:
                     self.__idle_count = 0
